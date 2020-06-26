@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ labels:
+   app: graphite
+ name: graphite
+spec:
+ replicas: 1
+ selector:
+   matchLabels:
+     app: graphite
+ template:
+   metadata:
+     labels:
+       app: graphite
+   spec:
+     containers:
+     - image: graphiteapp/docker-graphite-statsd
+       name: graphite
+       ports:
+       - containerPort: 2003
+         name: carbon-plain
+       - containerPort: 2004
+         name: carbon-pkl
+       - containerPort: 2023
+         name: carbon-ag-plain
+       - containerPort: 2024
+         name: carbon-ag-pkl
+       - containerPort: 8125
+         name: statsd
+       - containerPort: 8126
+         name: statsd-admin
+       - containerPort: 80
+         name: http
